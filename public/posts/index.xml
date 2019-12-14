@@ -1,20 +1,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Posts on yuhe.dev</title>
-		<link>https://example.com/posts/</link>
+		<link>https://www.yuhe.dev/posts/</link>
 		<description>Recent content in Posts on yuhe.dev</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
 		<lastBuildDate>Fri, 13 Dec 2019 18:10:16 -0500</lastBuildDate>
-		<atom:link href="https://example.com/posts/index.xml" rel="self" type="application/rss+xml" />
+		<atom:link href="https://www.yuhe.dev/posts/index.xml" rel="self" type="application/rss+xml" />
 		
 		<item>
 			<title>My First Post</title>
-			<link>https://example.com/posts/my-first-post/</link>
+			<link>https://www.yuhe.dev/posts/my-first-post/</link>
 			<pubDate>Fri, 13 Dec 2019 18:10:16 -0500</pubDate>
 			
-			<guid>https://example.com/posts/my-first-post/</guid>
+			<guid>https://www.yuhe.dev/posts/my-first-post/</guid>
 			<description>Welcome to my blog A little about me: I am a person who is interested in statistics and data visualization. I enjoy seeing data represented in interesting ways. Data is beautiful.
 I am also very interested in software craftmanship, making high quality code and discovering what are the best design principles.
 When you put these two interests together, it is no surprise that I am interested in writing websites that have cool graphs in them!</description>
