@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>boring-man on yuhe.dev</title>
-    <link>https://www.yuhe.dev/tags/boring-man/</link>
-    <description>Recent content in boring-man on yuhe.dev</description>
+    <title>programming on yuhe.dev</title>
+    <link>https://www.yuhe.dev/tags/programming/</link>
+    <description>Recent content in programming on yuhe.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Fri, 20 Dec 2019 10:00:18 -0500</lastBuildDate>
     
-	<atom:link href="https://www.yuhe.dev/tags/boring-man/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.yuhe.dev/tags/programming/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,17 +20,6 @@
       <guid>https://www.yuhe.dev/posts/discord-bot/</guid>
       <description>So I wanted a discord bot&amp;hellip; All these times, I have seen people talking about discord bots and using them to do all sorts of amazing things, I have felt left in the dark because the last time I tried using discord.py&#39;s library I failed to wrap my head around everything.
 That was a time when my ambitions didn&#39;t measure against my ability to read documentation. This time was different, and I am proud to announce my new discord bot: Coybot</description>
-    </item>
-    
-    <item>
-      <title>My First Post</title>
-      <link>https://www.yuhe.dev/posts/my-first-post/</link>
-      <pubDate>Fri, 13 Dec 2019 18:10:16 -0500</pubDate>
-      
-      <guid>https://www.yuhe.dev/posts/my-first-post/</guid>
-      <description>Welcome to my blog A little about me: I am a person who is interested in statistics and data visualization. I enjoy seeing data represented in interesting ways. Data is beautiful.
-I am also very interested in software craftmanship, making high quality code and discovering what are the best design principles.
-When you put these two interests together, it is no surprise that I am interested in writing websites that have cool graphs in them!</description>
     </item>
     
   </channel>
