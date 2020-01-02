@@ -12,7 +12,6 @@ tags:
   - rating
   - programming
 ---
-
 How do you compare rating algorithms? Or more generally, what is an objective measure of the accuracy of a predictor?
 
 # The Motivation #
