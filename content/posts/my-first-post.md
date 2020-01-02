@@ -1,7 +1,7 @@
 ---
 title: "My First Post"
 date: 2019-12-13T18:10:16-05:00
-draft: true
+draft: false
 toc: false
 images:
 tags: 

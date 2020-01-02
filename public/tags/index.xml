@@ -7,9 +7,82 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 01 Jan 2020 21:34:52 -0500</lastBuildDate>
     
 	<atom:link href="https://www.yuhe.dev/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>boring-man</title>
+      <link>https://www.yuhe.dev/tags/boring-man/</link>
+      <pubDate>Wed, 01 Jan 2020 21:34:52 -0500</pubDate>
+      
+      <guid>https://www.yuhe.dev/tags/boring-man/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data analysis</title>
+      <link>https://www.yuhe.dev/tags/data-analysis/</link>
+      <pubDate>Wed, 01 Jan 2020 21:34:52 -0500</pubDate>
+      
+      <guid>https://www.yuhe.dev/tags/data-analysis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>programming</title>
+      <link>https://www.yuhe.dev/tags/programming/</link>
+      <pubDate>Wed, 01 Jan 2020 21:34:52 -0500</pubDate>
+      
+      <guid>https://www.yuhe.dev/tags/programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://www.yuhe.dev/tags/python/</link>
+      <pubDate>Wed, 01 Jan 2020 21:34:52 -0500</pubDate>
+      
+      <guid>https://www.yuhe.dev/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rating</title>
+      <link>https://www.yuhe.dev/tags/rating/</link>
+      <pubDate>Wed, 01 Jan 2020 21:34:52 -0500</pubDate>
+      
+      <guid>https://www.yuhe.dev/tags/rating/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>statistics</title>
+      <link>https://www.yuhe.dev/tags/statistics/</link>
+      <pubDate>Wed, 01 Jan 2020 21:34:52 -0500</pubDate>
+      
+      <guid>https://www.yuhe.dev/tags/statistics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>discord.py</title>
+      <link>https://www.yuhe.dev/tags/discord.py/</link>
+      <pubDate>Fri, 20 Dec 2019 10:00:18 -0500</pubDate>
+      
+      <guid>https://www.yuhe.dev/tags/discord.py/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>code</title>
+      <link>https://www.yuhe.dev/tags/code/</link>
+      <pubDate>Fri, 13 Dec 2019 18:10:16 -0500</pubDate>
+      
+      <guid>https://www.yuhe.dev/tags/code/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

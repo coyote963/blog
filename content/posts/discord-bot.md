@@ -1,7 +1,7 @@
 ---
 title: "Discord Bot"
 date: 2019-12-20T10:00:18-05:00
-draft: true
+draft: false
 toc: false
 images:
 tags: 

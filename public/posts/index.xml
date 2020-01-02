@@ -1,0 +1,145 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Posts on yuhe.dev</title>
+		<link>https://www.yuhe.dev/posts/</link>
+		<description>Recent content in Posts on yuhe.dev</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en-us</language>
+		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+		<lastBuildDate>Wed, 01 Jan 2020 21:34:52 -0500</lastBuildDate>
+		<atom:link href="https://www.yuhe.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Rating Analytics</title>
+			<link>https://www.yuhe.dev/posts/rating-analytics/</link>
+			<pubDate>Wed, 01 Jan 2020 21:34:52 -0500</pubDate>
+			
+			<guid>https://www.yuhe.dev/posts/rating-analytics/</guid>
+			<description>How do you compare rating algorithms? Or more generally, what is an objective measure of the accuracy of a predictor?
+The Motivation I run ratings on a team based shooter called Boring Man, and I&#39;ve always wanted to be able to rank the players in terms of their skills. In fact I believe my first encounters with hobby programming were because of this game.
+In previous iterations of my projects, I had always used the Elo rating scheme to adjust player&#39;s ratings, but this time I decided to experiment more and use the TrueSkill rating system by the people at Microsoft.</description>
+			<content type="html"><![CDATA[<p>How do you compare rating algorithms? Or more generally, what is an objective measure of the accuracy of a predictor?</p>
+<h1 id="the-motivation">The Motivation</h1>
+<p>I run ratings on a <a href="https://spasmangames.com/boringman/">team based shooter called Boring Man</a>, and I've always wanted to be able to rank the players in terms of their skills. In fact I believe my first encounters with hobby programming were because of this game.</p>
+<p>In previous iterations of my projects, I had always used the Elo rating scheme to adjust player's ratings, but this time I decided to experiment more and use the <a href="https://www.wikiwand.com/en/TrueSkill">TrueSkill</a> rating system by the people at Microsoft. Specifically I used this wonderful <a href="http://trueskill.org/">library</a>. To explain the motivations behind this decision, I need to go into how Boring Man is played.</p>
+<p>In Boring Man, players are assigned to either one of two teams. After assigning teams, a round starts and players try to eliminate each other. The winner of a round is decided when one team no longer has any alive players. Then the whole process restarts, and the first team to win 10 times is declared the winner of the match. For the sake of this discussion, I will ignore draws.</p>
+<p>My previous rating system used Elo to adjust player's ratings when an elimination happened, but using TrueSkill, I can compare the likelihood that a team wins, and adjust the team's constituent's ratings. This was of great interest to me because I always had the suspicion that Elo rating didn't encapsulate what it meant to win a team game.</p>
+<h1 id="challenge-turning-elo-into-a-team-rating">Challenge: Turning Elo into a Team Rating</h1>
+<p>In order to quantify my suspicions, I had to derive my version of the strength of an Elo team. I envisioned the strength of a team as the sum of the strengths of their individual players. As a unit of strength, I took that to mean: What how strong are they compared to a player that is average rated. From there, the formulation is pretty simple:</p>
+<p>Original Expression of A's chance of beating B:
+$$P(R_a, R_b) = \frac{1}{1+10^{\frac{R_b-R_a}{400}}}$$</p>
+<p>Let B be a 1000 rated player:</p>
+<p>$$P(R_a, R_b) = \frac{1}{1+10^{\frac{1000-R_a}{400}}}$$</p>
+<p>In order to simplify, let</p>
+<p>$$X = 1+10^{\frac{1000-R_a}{400}}$$</p>
+<p>Relative strength of Ra over average player</p>
+<p>$$\frac{\frac{1}{X}}{1 - \frac{1}{X}} = \frac{1}{X-1} = \frac{1}{10^{\frac{1000 - R_a}{400}}}$$</p>
+<p>Then the strength of a team is:</p>
+<p>$$S = \sum\limits_{i=1}^n \frac{1}{10^{\frac{1000-R_i}{400}}}$$</p>
+<p>where S is the total strength of a team, n is the number of players on the team and Ri is the strength of the ith player on the team.</p>
+<p>Then if there is two teams A and B, the likelihood of A winning (and if ignoring draws, 1 - likelihood of B winning) is:</p>
+<p>$$W_a = \frac{S_a}{S_a + S_b}$$</p>
+<h1 id="how-to-judge-the-strength-of-predictions">How to judge the strength of predictions</h1>
+<p>In my statistics classes, I learned the concept of variance of samples and immediately thought of using that to see which rating system performed better.</p>
+<p>In the end I decided to check the internet for some information, and maybe learn some statistics&hellip; Well I was glad I did. After some searching I found an interesting wikipedia article about <a href="https://www.wikiwand.com/en/Scoring_rule">scoring rule</a>.</p>
+<p>As I understand it, there is functions that given a result and a prediction tell you how <em>good</em> the prediction is. My variance method was actually called the Brier Score, a restatement of the variance equation familiar to statistics undergraduates.</p>
+<p>$$\frac{1}{N}\sum\limits_{i=1}^n (p - a)^2$$</p>
+<p>Where <code>p</code> is prediction and <code>a</code> is the actual. Another scoring rule or scoring function is the logarithmic, which is actually just a restatement of the equation of entropy.</p>
+<p>In my case, this is calculated as follows:</p>
+<p>$$a ln(p) + (1 - a) ln(1 - p)$$</p>
+<p>Where a is the actual outcome, and p is the prediction of team1 winning. Math is easy under two outcomes&hellip;</p>
+<h1 id="the-code">The code</h1>
+<p>First I copied the <a href="https://trueskill.org/#win-probability">win likelihood function for TrueSkill</a>.</p>
+<p>Then I implemented the win likelihood for elo from the equations above.</p>
+<pre><code>def win_probability_elo(team1, team2):
+    s1 = 0
+    s2 = 0
+    for player in team1:
+        s1 += 1.0 / (10 ** ((1000.0 - player.elo) / 400.0))
+    for player in team2:
+        s2 += 1.0 / (10 ** ((1000.0 - player.elo) / 400.0))
+    return s1 / (s1 + s2)
+</code></pre><p>I made a logarithmic scoring function to compare the average scores of the two rating systems</p>
+<pre><code>def score(win_prediction, actual):
+    return actual * math.log(win_prediction) + (1 - actual) * math.log(1 - win_prediction)
+</code></pre><h3 id="collecting-data">Collecting data</h3>
+<p>With everything set up, I had my code output the scores of each round into a text file. Time to just sit back and watch.</p>
+<p>That will the the subject of my follow up blog post. It takes a while to get a lot of data for this game since not too many people are playing&hellip; but hopefully that will change.</p>
+<p>This is just a small part of what I intended to do with all this data. Follow the rest of the progress <a href="https://github.com/coyote963/bman-data/">here</a>.</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Discord Bot</title>
+			<link>https://www.yuhe.dev/posts/discord-bot/</link>
+			<pubDate>Fri, 20 Dec 2019 10:00:18 -0500</pubDate>
+			
+			<guid>https://www.yuhe.dev/posts/discord-bot/</guid>
+			<description>Documenting the process of creating a discord bot.
+So I wanted a discord bot&amp;hellip; All these times, I have seen people talking about discord bots and using them to do all sorts of amazing things, I have felt left in the dark because the last time I tried using discord.py&#39;s library I failed to wrap my head around everything.
+That was a time when my ambitions didn&#39;t measure against my ability to read documentation.</description>
+			<content type="html"><![CDATA[<p>Documenting the process of creating a discord bot.</p>
+<h2 id="so-i-wanted-a-discord-bot">So I wanted a discord bot&hellip;</h2>
+<p>All these times, I have seen people talking about discord bots and using them to do all sorts of amazing things, I have felt left in the dark because the last time I tried using discord.py's library I failed to wrap my head around everything.</p>
+<p>That was a time when my ambitions didn't measure against my ability to read documentation. This time was different, and I am proud to announce my new discord bot: Coybot</p>
+<h2 id="how-i-made-it">How I made it</h2>
+<p>Well first I was looking online for some sample projects so I could see what kind of code was boilerplate, and I could just copy. This led me to a couple libraries like <a href="https://github.com/SourSpoon/Discord.py-Template">this</a>. I noticed that this boilerplate was really extensive and seemed to be a overshoot of the small problem that I had. So then I noticed in the readme of that repo, that there was a way to generate a template for this exact purpose!</p>
+<p>Great, so I did <code>python -m discord newbot coybot</code> and the bot was made! I wanted everything to be in best practices so I immediately made a cog, then ran into the issue of not being able to load the cog in with <code>load_extension(cog)</code>, thats when my shaky understanding of python's module system came back to bite me. After a few minutes of googling, I realized that</p>
+<ol start="0">
+<li>You don't just type the name of the cog</li>
+<li>You don't load the cog object into the config.py</li>
+<li>You don't type a relative path in there either</li>
+</ol>
+<p>Welp finally the cog had loaded and all was good!</p>
+<p>Now I had code that used webhooks to send messages to my discord server, so it was really quite easy to convert that code into callable functions that simply required database clients, but that raised the final issue which was: Where was the best place to instantiate my database connection?</p>
+<p>I finally put it in the <code>init</code> method, put the database uri in a secrets folder and called it a day. With some debugging everything worked fine and dandy.</p>
+<h2 id="conclusions">Conclusions</h2>
+<p>The groundwork for the bot has been set, I just have to hammer out a bunch of commands. With a system like cogs in place, it nicely packages everything in your filestructure. I am beginning to think how best to separate my commands, and whether that is even necessary.</p>
+<p>More updates to come</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>My First Post</title>
+			<link>https://www.yuhe.dev/posts/my-first-post/</link>
+			<pubDate>Fri, 13 Dec 2019 18:10:16 -0500</pubDate>
+			
+			<guid>https://www.yuhe.dev/posts/my-first-post/</guid>
+			<description>Welcome to my blog A little about me: I am a person who is interested in statistics and data visualization. I enjoy seeing data represented in interesting ways. Data is beautiful.
+I am also very interested in software craftmanship, making high quality code and discovering what are the best design principles.
+When you put these two interests together, it is no surprise that I am interested in writing websites that have cool graphs in them!</description>
+			<content type="html"><![CDATA[<h1 id="welcome-to-my-blog">Welcome to my blog</h1>
+<p>A little about me: I am a person who is interested in statistics and data visualization. I enjoy seeing data represented in interesting ways. Data is beautiful.</p>
+<p>I am also very interested in software craftmanship, making high quality code and discovering what are the best design principles.</p>
+<p>When you put these two interests together, it is no surprise that I am interested in writing websites that have cool graphs in them!</p>
+<h3 id="how-i-hope-to-use-my-blog">How I hope to use my blog</h3>
+<p>I hope that this is a blog that documents my progression as a professional. I want to see how I have changed over the years and document the things that are in my head. I sometimes have many thoughts bouncing in my head and I wish to put them into writing as a way of explaining them to an imaginary person, as a way of further understanding these ideas myself.</p>
+<p>I love exploring new technologies, and want to write about my progress learning them. In the future I plan to tackle machine learning, more complex data visualization and a little dev ops.</p>
+<h3 id="more-specifically">More specifically&hellip;</h3>
+<p>Here are some projects I have coming down the pipeline. Right now the Boring Man Rewrite is in full development, and I want to ensure that this blog reflects the excitement for the future of my beloved game!</p>
+<p>I am working on projects that aim to augment the player experience. Such as:</p>
+<ol>
+<li>boring man discord bot</li>
+<li>boring man ratings rcon script</li>
+<li>boring man 1v1 automator</li>
+<li>boring man casino</li>
+<li>boring man boring man website dyson.city</li>
+<li>boring man server host on demand</li>
+</ol>
+<p>Besides software development, I want to start making some content of the game</p>
+<ol>
+<li>map based around a certain aesthetic (dark fantasy sci-fi map) with custom tiles</li>
+<li>tech video</li>
+<li>map showcases</li>
+<li>matches between top players</li>
+</ol>
+<p>Boring man may be my focus for the next few weeks but in the far future (3 months?), I know I have some projects in areas of game development and artificial intelligence I want developed.</p>
+<ol>
+<li>A game like mega man, grid based combat online</li>
+<li>Idk anything about AI/ML but after taking a few courses I'll think of something</li>
+</ol>
+]]></content>
+		</item>
+		
+	</channel>
+</rss>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>statistics on yuhe.dev</title>
+    <link>https://www.yuhe.dev/tags/statistics/</link>
+    <description>Recent content in statistics on yuhe.dev</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 01 Jan 2020 21:34:52 -0500</lastBuildDate>
+    
+	<atom:link href="https://www.yuhe.dev/tags/statistics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Rating Analytics</title>
+      <link>https://www.yuhe.dev/posts/rating-analytics/</link>
+      <pubDate>Wed, 01 Jan 2020 21:34:52 -0500</pubDate>
+      
+      <guid>https://www.yuhe.dev/posts/rating-analytics/</guid>
+      <description>How do you compare rating algorithms? Or more generally, what is an objective measure of the accuracy of a predictor?
+The Motivation I run ratings on a team based shooter called Boring Man, and I&#39;ve always wanted to be able to rank the players in terms of their skills. In fact I believe my first encounters with hobby programming were because of this game.
+In previous iterations of my projects, I had always used the Elo rating scheme to adjust player&#39;s ratings, but this time I decided to experiment more and use the TrueSkill rating system by the people at Microsoft.</description>
+    </item>
+    
+  </channel>
+</rss>
