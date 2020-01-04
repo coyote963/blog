@@ -13,7 +13,7 @@ tags:
 
 Welcome to the second part of my two part Boring Man Boilerplate Rcon tutorial. If you haven't already check out the first part for a basic introduction to interfacing with Boring Man Rewrite servers. This tutorial will show how to do some more advanced things: sending multiple comamnds.
 
-# Comamnd to make someone Overpowered #
+# Command to make someone Overpowered #
 
 For this part we will make a command for users to be able to get every powerup. Let's do this when someone types "!op" in chat. As usual we need to set up the function
 
@@ -25,7 +25,7 @@ def op(event_id, message_string, sock):
     if js['Message'].startswith("!op"):
       # Here we will need to add all the powerups
 ```
-Now we can check the [documentation of the boilerplat](https://github.com/coyote963/bm-boilerplate) and see that the command we want is `powerup`. And we can loop through all 5 of them and give to the issuer of the command. 
+Now we can check the [documentation of the boilerplate](https://github.com/coyote963/bm-boilerplate) and see that the command we want is `powerup : Give a specified player a specified power up. 1 = triple damage, 2 = super speed, 3 = regen, 4 = invis, 5 = bfg [Requires Mutators]` And we can loop through all 5 of them and give to the issuer of the command. 
 
 ```python
 def op(event_id, message_string, sock):
@@ -42,6 +42,8 @@ But if we were to test it out, this only gives one powerup. What gives?
 The reason is that we are sending out the requests too quickly. So we need to add some delay between the powerups. One way to do this is by importing a library called `time`. And then forcing the code to sleep. To be safe we need to sleep 0.1 seconds.
 
 ```python
+import time
+
 def op(event_id, message_string, sock):
   """Handles the case where a user types !op in chat"""
   if event_id == rcon_event.chat_message.value:
