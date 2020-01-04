@@ -71,6 +71,7 @@ Here `event_id` gets passed into all the functions, telling the function what *k
 def ping(event_id, message_string, sock):
   """Responds in game with pong when user types !ping"""
   if event_id == rcon_event.chat_message.value:
+    js = json.loads(message_string)
     if 'PlayerID' in js and js['PlayerID'] != -1:
       if js['Message'].startswith("!ping")
 ```
